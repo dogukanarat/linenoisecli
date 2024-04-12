@@ -100,21 +100,6 @@ int32_t cli::registerDefaultCommands()
 {
     int32_t status = 0;
 
-    std::string testCommand = "testCommand <mustArg1> <mustArg2> [<optionalArg>] [<optionalArg2>]";
-
-    registerCommand(testCommand, [this](ArgumentMap &arguments) -> int32_t {
-        int32_t status = 0;
-
-        std::cout << "Test command" << std::endl;
-
-        for (auto& argument : arguments)
-        {
-            std::cout << "Argument: " << argument.first << " = " << argument.second << std::endl;
-        }
-
-        return status; 
-    });
-
     registerCommand("help", [this](ArgumentMap &arguments) -> int32_t {
         int32_t status = 0;
         std::vector<std::string> helpCommands;

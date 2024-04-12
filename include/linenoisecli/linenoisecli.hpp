@@ -41,7 +41,6 @@ namespace linenoisecli
         int32_t processCommand(const std::string& command);
         int32_t registerDefaultCommands();
 
-
         std::thread mThread;
         bool mIsExitRequested = false;
         std::string mPrompt = "cli> ";
