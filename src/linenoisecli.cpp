@@ -5,6 +5,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <algorithm>
 
 #include "linenoise.h"
 
@@ -18,6 +19,7 @@
 #define CONSOLE_COLOR_CYAN "\x1b[36m"
 #define CONSOLE_COLOR_RESET "\x1b[0m"
 
+#define UNUSED(x) (void)(x)
 #define ERRNO(x) (-(x))
 
 using namespace linenoisecli;
@@ -67,6 +69,7 @@ static bool strcontains(const std::string &str, char c)
     return str.find(c) != std::string::npos;
 }
 
+#if 0
 static std::string strclear(const std::string &str, std::vector<std::string> word)
 {
     std::string result = str;
@@ -80,6 +83,7 @@ static std::string strclear(const std::string &str, std::vector<std::string> wor
     }
     return result;
 }
+#endif
 
 cli::cli()
 {
@@ -101,6 +105,8 @@ int32_t cli::registerDefaultCommands()
     int32_t status = 0;
 
     registerCommand("help", [this](ArgumentMap &arguments) -> int32_t {
+        UNUSED(arguments);
+
         int32_t status = 0;
         std::vector<std::string> helpCommands;
 
@@ -126,9 +132,6 @@ int32_t cli::registerDefaultCommands()
 
 void cli::run(int argc, char **argv)
 {
-    char *prgname = argv[0];
-    int async = 0;
-
     /* Parse options, with --multiline we enable multi line editing. */
     while (argc > 1)
     {
@@ -143,10 +146,6 @@ void cli::run(int argc, char **argv)
         {
             linenoisePrintKeyCodes();
             exit(0);
-        }
-        else if (!strcmp(*argv, "--async"))
-        {
-            async = 1;
         }
         else
         {
@@ -164,7 +163,7 @@ void cli::run(int argc, char **argv)
      * where entries are separated by newlines. */
     linenoiseHistoryLoad(mHistoryFile.c_str()); /* Load the history at startup */
 
-    mThread = std::thread([this, async]() {
+    mThread = std::thread([this]() {
         char *line;
 
         while (!mIsExitRequested)
