@@ -30,26 +30,38 @@ int main(int argc, char** argv)
     linenoisecli::cli::getInstance().registerCommand(
         "exampleCmd1 <arg1> <arg2> <arg3>", 
         [](linenoisecli::cli::ArgumentMap& args) -> int32_t
-    {
-        std::cout << COLOR_GREEN << "exampleCmd1 called with " << args.size() << " arguments." << COLOR_RESET << std::endl;
-        for (const auto& arg : args)
         {
-            std::cout << COLOR_GREEN << "  " << arg.first << " = " << arg.second << COLOR_RESET << std::endl;
-        }
-        return 0;
-    });
+            std::cout << COLOR_GREEN << "exampleCmd1 called with " << args.size() << " arguments." << COLOR_RESET << std::endl;
+            for (const auto& arg : args)
+            {
+                std::cout << COLOR_GREEN << "  " << arg.first << " = " << arg.second << COLOR_RESET << std::endl;
+            }
+            return 0;
+        });
 
     linenoisecli::cli::getInstance().registerCommand(
         "exampleCmd2 <arg1> <arg2> <arg3> [<arg4>] [<arg5>]", 
         [](linenoisecli::cli::ArgumentMap& args) -> int32_t
-    {
-        std::cout << COLOR_BLUE << "exampleCmd2 called with " << args.size() << " arguments." << COLOR_RESET << std::endl;
-        for (const auto& arg : args)
         {
-            std::cout << COLOR_BLUE << "  " << arg.first << " = " << arg.second << COLOR_RESET << std::endl;
-        }
-        return 0;
-    });
+            std::cout << COLOR_BLUE << "exampleCmd2 called with " << args.size() << " arguments." << COLOR_RESET << std::endl;
+            for (const auto& arg : args)
+            {
+                std::cout << COLOR_BLUE << "  " << arg.first << " = " << arg.second << COLOR_RESET << std::endl;
+            }
+            return 0;
+        });
+
+    linenoisecli::cli::getInstance().registerCommand(
+        "exampleCmd3 [<arg1>]", 
+        [](linenoisecli::cli::ArgumentMap& args) -> int32_t
+        {
+            std::cout << COLOR_YELLOW << "exampleCmd3 called with " << args.size() << " arguments." << COLOR_RESET << std::endl;
+            for (const auto& arg : args)
+            {
+                std::cout << COLOR_YELLOW << "  " << arg.first << " = " << arg.second << COLOR_RESET << std::endl;
+            }
+            return 0;
+        });
 
     while (!gIsExitRequested && !linenoisecli::cli::getInstance().isExitRequested())
     {

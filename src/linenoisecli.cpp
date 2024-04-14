@@ -69,22 +69,6 @@ static bool strcontains(const std::string &str, char c)
     return str.find(c) != std::string::npos;
 }
 
-#if 0
-static std::string strclear(const std::string &str, std::vector<std::string> word)
-{
-    std::string result = str;
-    for (const auto &w : word)
-    {
-        size_t pos = result.find(w);
-        if (pos != std::string::npos)
-        {
-            result.erase(pos, w.size());
-        }
-    }
-    return result;
-}
-#endif
-
 cli::cli()
 {
     registerDefaultCommands();
@@ -125,6 +109,15 @@ int32_t cli::registerDefaultCommands()
         }
 
         return status; 
+    });
+
+    registerCommand("exit", [this](ArgumentMap &arguments) -> int32_t {
+        UNUSED(arguments);
+
+        int32_t status = 0;
+        mIsExitRequested = true;
+
+        return status;
     });
 
     return status;
@@ -249,7 +242,8 @@ void cli::run(int argc, char **argv)
         }
 
         // std::cout << CONSOLE_COLOR_CYAN << "Exiting..." << CONSOLE_COLOR_RESET << std::endl;
-        mIsExitRequested = true; });
+        mIsExitRequested = true; 
+    });
 }
 
 void cli::setPrompt(const std::string &prompt)
